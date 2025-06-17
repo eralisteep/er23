@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #171717;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -14,8 +14,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ededed;
+    --foreground: #0a0a0a;
   }
 }
 
@@ -23,4 +23,160 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.custom-div-icon {
+  background: transparent;
+}
+
+.marker-number {
+  background-color: #2e86de;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 2px solid white;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Dashboard styles --- */
+.dashboard-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  background: var(--color-background, #171717);
+  color: var(--color-foreground, #fff);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 32px;
+  letter-spacing: 0.5px;
+}
+
+.dashboard-links {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.dashboard-link {
+  display: block;
+  padding: 14px 0;
+  width: 100%;
+  text-align: center;
+  background: #222;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
+}
+
+.dashboard-link:hover {
+  background: #2e86de;
+  color: #fff;
+}
+
+.dashboard-link-admin {
+  background: #b71c1c;
+}
+
+.dashboard-link-admin:hover {
+  background: #e53935;
+}
+
+.dashboard-link-staff {
+  background: #fbc02d;
+  color: #222;
+}
+
+.dashboard-link-staff:hover {
+  background: #ffd600;
+  color: #111;
+}
+
+/* --- Form styles --- */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #2e86de;
+  border-radius: 8px;
+  background: #181818;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #5dade2;
+  background: #222;
+  box-shadow: 0 0 0 2px #2e86de33;
+}
+
+input[disabled],
+textarea[disabled],
+select[disabled] {
+  background: #333;
+  color: #aaa;
+  border-color: #444;
+  cursor: not-allowed;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+  color: #5dade2;
+}
+
+/* --- Button styles --- */
+button,
+input[type="submit"] {
+  background: #2e86de;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(46,134,222,0.08);
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: #216ab4;
+}
+
+button:disabled,
+input[type="submit"]:disabled {
+  background: #aaa;
+  color: #eee;
+  cursor: not-allowed;
 }
