@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   if (error) return error;
 
     try {
-        const tripId = req.nextUrl.pathname.split('/').pop() || '';
+        const tripId = Number(req.nextUrl.pathname.split('/').pop() || '');
         const { data, error } = await supabase
         .from('trips')
         .select('*')
@@ -34,7 +34,25 @@ export async function DELETE(req: NextRequest) {
   if (error) return error;
 
     try {
-        const tripId = req.nextUrl.pathname.split('/').pop() || '';
+        const tripId = Number(req.nextUrl.pathname.split('/').pop() || '');
+        const { error: locError } = await supabase
+            .from('locations')
+            .delete()
+            .eq('trip_id', tripId);
+
+        if (locError) {
+            return NextResponse.json({ error: locError.message }, { status: 500 });
+        }
+
+        const { error: revError } = await supabase
+            .from('reviews')
+            .delete()
+            .eq('trip_id', tripId);
+
+        if (revError) {
+            return NextResponse.json({ error: revError.message }, { status: 500 });
+        }
+
         const { error } = await supabase
         .from('trips')
         .delete()
@@ -55,7 +73,7 @@ export async function PUT(req: NextRequest) {
   if (error) return error;
 
     try {
-        const tripId = req.nextUrl.pathname.split('/').pop() || '';
+        const tripId = Number(req.nextUrl.pathname.split('/').pop() || '');
         const { title, description, start_date, end_date, price } = await req.json();
 
         if (!title || !description || !start_date || !end_date || !price) {
