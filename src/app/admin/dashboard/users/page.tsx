@@ -58,8 +58,13 @@ export default function AdminUsersPage() {
         body: JSON.stringify({ role: editRole }),
       });
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Ошибка изменения роли');
+        // Можно попробовать получить ошибку, если она есть
+        let errorMsg = 'Ошибка изменения роли';
+        try {
+          const data = await res.json();
+          errorMsg = data.error || errorMsg;
+        } catch {}
+        throw new Error(errorMsg);
       }
       fetchUsers();
       setEditId(null);
