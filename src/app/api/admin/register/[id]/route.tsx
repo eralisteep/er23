@@ -40,5 +40,5 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: dbError.message }, { status: 500 });
   }
 
-  return NextResponse.json({ success: true, user: data.user });
+  return NextResponse.json({ success: true});
 }
