@@ -9,10 +9,7 @@ const supabase = createClient(
 
 // Изменить роль пользователя и в user_metadata, и в таблице users
 export async function PUT(req: NextRequest) {
-  // Получаем params асинхронно!
-  // @ts-ignore
-  const { params } = await req;
-  const id = params.id;
+        const userId = req.nextUrl.pathname.split('/').pop() || '';
   const { user, error } = await requireAuth(req, 'admin');
   if (error) return error;
 
@@ -22,7 +19,7 @@ export async function PUT(req: NextRequest) {
   }
 
   // 1. Обновить роль в user_metadata
-  const { data, error: updateError } = await supabase.auth.admin.updateUserById(id, {
+  const { data, error: updateError } = await supabase.auth.admin.updateUserById(userId, {
     user_metadata: { role },
   });
 
@@ -34,11 +31,11 @@ export async function PUT(req: NextRequest) {
   const { error: dbError } = await supabase
     .from('users')
     .update({ role })
-    .eq('id', id);
+    .eq('id', userId);
 
   if (dbError) {
     return NextResponse.json({ error: dbError.message }, { status: 500 });
   }
 
-  return NextResponse.json({ success: true});
+  return NextResponse.json({ success: true });
 }
