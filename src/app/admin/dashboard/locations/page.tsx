@@ -1,8 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import dynamic from 'next/dynamic';
+
+const LocationMap = dynamic(() => import('@/app/components/clickableMap'), {
+  ssr: false,
+});
 
 type Location = {
   trip_id: number;
@@ -11,15 +15,6 @@ type Location = {
   lng: number;
   order: number;
 };
-
-function LocationMarker({ setLatLng }: { setLatLng: (latLng: { lat: number; lng: number }) => void }) {
-  useMapEvents({
-    click(e) {
-      setLatLng({ lat: e.latlng.lat, lng: e.latlng.lng });
-    },
-  });
-  return null;
-}
 
 export default function LocationsPage() {
   const [trips, setTrips] = useState<any[]>([]);
@@ -161,13 +156,7 @@ export default function LocationsPage() {
             required
           />
         </div>
-        <MapContainer center={[0, 0]} zoom={1} style={{ height: '400px' }}>
-            <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <LocationMarker setLatLng={setlatLng} />
-            {latLng && <Marker position={[latLng.lat, latLng.lng]} />}
-        </MapContainer>
+        <LocationMap latLng={latLng} setLatLng={setlatLng} />
         {formError && <div style={{ color: 'red' }}>{formError}</div>}
         <button type="submit" disabled={formLoading}>
           {formLoading ? 'Добавление...' : 'Добавить'}

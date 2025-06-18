@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import Map from '@/app/components/map';
+import dynamic from 'next/dynamic';
+const Map = dynamic(() => import('@/app/components/map'), { ssr: false });
 
 type Review = {
   id: number;
