@@ -46,3 +46,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Internal server error.' }, { status: 500 });
   }
 }
+
+export async function GET(req: NextRequest) {
+      const { user, error } = await requireAuth(req, 'admin');
+  if (error) return error;
+
+  try {
+    const { data, error: selectError } = await supabase
+      .from('users')
+      .select('*')
+      .order('role', { ascending: true });
+
+    if (selectError) {
+      return NextResponse.json({ error: selectError.message }, { status: 500 });
+    }
+
+    return NextResponse.json(data, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ error: 'Internal server error.' }, { status: 500 });
+  }
+}

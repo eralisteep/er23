@@ -51,3 +51,27 @@ export async function DELETE(req: NextRequest) {
         return NextResponse.json({ error: 'Internal server error.' }, { status: 500 });
     }
 }
+
+export async function PUT(req: NextRequest) {
+        const { user, error } = await requireAuth(req, 'admin');
+  if (error) return error;
+
+    try {
+        const locationId = req.nextUrl.pathname.split('/').pop() || '';
+        const { trip_id, name, lat, lng, order } = await req.json();
+
+        const { data, error } = await supabase
+        .from('locations')
+        .update({ trip_id, name, lat, lng, order })
+        .eq('id', locationId)
+        .select('*');
+
+        if (error) {
+            return NextResponse.json({ error: error.message }, { status: 500 });
+        }
+
+        return NextResponse.json(data, { status: 200 });
+    } catch (err) {
+        return NextResponse.json({ error: 'Internal server error.' }, { status: 500 });
+    }
+}
