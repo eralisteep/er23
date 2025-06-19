@@ -58,7 +58,7 @@ export default function TripPage() {
       .then(res => res.json())
       .then(data => setReviews(Array.isArray(data) ? data : []));
 
-    // Получаем userId (можно через /api/auth/me или из localStorage, если есть)
+    // Получаем userId (через /api/auth/me)
     fetch('/api/auth/me')
       .then(res => res.json())
       .then(data => setUserId(data?.user?.id || null))

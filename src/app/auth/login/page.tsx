@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
@@ -64,6 +64,29 @@ export default function LoginPage() {
           {loading ? 'Вход...' : 'Войти'}
         </button>
       </form>
+            <div style={{
+        marginBottom: 24,
+        display: 'flex',
+        justifyContent: 'flex-start',
+        padding: '10px 20px'
+      }}>
+        <a
+          href="/dashboard"
+          className="dashboard-link"
+          style={{
+            maxWidth: 220,
+            background: '#2e86de',
+            color: '#fff',
+            borderRadius: 8,
+            fontWeight: 500,
+            textDecoration: 'none',
+            boxShadow: '0 2px 8px 0 rgba(46,134,222,0.08)',
+            transition: 'background 0.2s, color 0.2s'
+          }}
+        >
+          ← В личный кабинет
+        </a>
+      </div>
     </div>
   );
 }
